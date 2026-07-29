@@ -1,0 +1,79 @@
+{
+  "random_walk": {
+    "n": 150,
+    "cov_rl_mean": 0.9190108034517687,
+    "cov_bl_mean": 0.5492065578397092,
+    "cov_p": 1.1498028780334896e-26,
+    "cov_cliffs_delta": 0.9896888888888888,
+    "trace_rl_mean": 3.7290181730247665,
+    "trace_bl_mean": 3.690285320325156,
+    "trace_p": 0.7993639445703767,
+    "trace_cliffs_delta": -0.0743111111111111
+  },
+  "nearest_frontier": {
+    "n": 150,
+    "cov_rl_mean": 0.9190108034517687,
+    "cov_bl_mean": 0.5289160370767839,
+    "cov_p": 1.3503125287159758e-26,
+    "cov_cliffs_delta": 0.9793777777777778,
+    "trace_rl_mean": 3.7290181730247665,
+    "trace_bl_mean": 3.627637581620365,
+    "trace_p": 0.8672005566345143,
+    "trace_cliffs_delta": -0.02471111111111111
+  },
+  "spiral": {
+    "n": 150,
+    "cov_rl_mean": 0.9190108034517687,
+    "cov_bl_mean": 0.2872280012005938,
+    "cov_p": 1.1498028780334896e-26,
+    "cov_cliffs_delta": 1.0,
+    "trace_rl_mean": 3.7290181730247665,
+    "trace_bl_mean": 2.409671779557399,
+    "trace_p": 1.0,
+    "trace_cliffs_delta": -0.8365333333333334
+  },
+  "potential_field": {
+    "n": 150,
+    "cov_rl_mean": 0.9190108034517687,
+    "cov_bl_mean": 0.3351239871815873,
+    "cov_p": 1.1498028780334896e-26,
+    "cov_cliffs_delta": 0.9740444444444445,
+    "trace_rl_mean": 3.7290181730247665,
+    "trace_bl_mean": 2.0809371051730725,
+    "trace_p": 1.0,
+    "trace_cliffs_delta": -0.6638666666666667
+  },
+  "greedy_info_gain": {
+    "n": 150,
+    "cov_rl_mean": 0.9190108034517687,
+    "cov_bl_mean": 0.8337918206051922,
+    "cov_p": 8.115368447777489e-14,
+    "cov_cliffs_delta": 0.5339111111111111,
+    "trace_rl_mean": 3.7290181730247665,
+    "trace_bl_mean": 3.7951373366938346,
+    "trace_p": 0.13780771175851764,
+    "trace_cliffs_delta": 0.09826666666666667
+  },
+  "rrt_explorer": {
+    "n": 150,
+    "cov_rl_mean": 0.9190108034517687,
+    "cov_bl_mean": 0.39575820790576366,
+    "cov_p": 1.1497740753091391e-26,
+    "cov_cliffs_delta": 0.9971555555555556,
+    "trace_rl_mean": 3.7290181730247665,
+    "trace_bl_mean": 3.5007956614494318,
+    "trace_p": 0.9992891609812052,
+    "trace_cliffs_delta": -0.20608888888888888
+  },
+  "vanilla_ppo": {
+    "n": 150,
+    "cov_rl_mean": 0.9190108034517687,
+    "cov_bl_mean": 0.868748523135708,
+    "cov_p": 7.357753212870841e-11,
+    "cov_cliffs_delta": 0.4864888888888889,
+    "trace_rl_mean": 3.7290181730247665,
+    "trace_bl_mean": 3.78029591655204,
+    "trace_p": 0.13625806547235514,
+    "trace_cliffs_delta": 0.0404
+  }
+}

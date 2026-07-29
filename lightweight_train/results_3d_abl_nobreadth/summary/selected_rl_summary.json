@@ -1,0 +1,13 @@
+{
+  "method": "rl_agent",
+  "episodes": 50,
+  "final_coverage": 0.8484212891599767,
+  "final_cov_trace": 3.776734944055845,
+  "final_loop_closures": 3.18,
+  "final_altitude_changes": 15.12,
+  "final_cov_alt0": 0.7067531966648359,
+  "final_cov_alt1": 0.873681235779552,
+  "final_cov_alt2": 0.9277942681453311,
+  "final_cov_alt3": 0.8768805206713481,
+  "checkpoint": "slam3d_300000_steps.zip"
+}

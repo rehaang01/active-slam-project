@@ -1,0 +1,57 @@
+[INFO] [1776847780.826775984] [slam_data_collector]: SLAM data collector initialized (v2 — fixed)
+[INFO] [1776847780.827203548] [slam_data_collector]:   Covariance: /rtabmap/localization_pose (6-DOF)
+[INFO] [1776847780.827500775] [slam_data_collector]:   3D map:     /rtabmap/octomap_full
+[INFO] [1776847780.827774032] [slam_data_collector]:   2D map:     /rtabmap/octomap_grid (Z-filterable)
+[INFO] [1776847780.828078065] [slam_data_collector]:   LiDAR:      /scan (360° + directional, body-frame corrected)
+[INFO] [1776847780.828316941] [slam_data_collector]:   Depth:      /depth_camera (reactive avoidance)
+[INFO] [1776847780.828520981] [slam_data_collector]:   Tracking:   odom-timeout based (1.5s threshold)
+[INFO] [1776847781.883260953] [slam_data_collector]: Z-filter set (confirmed): [0.50m, 1.50m]
+[INFO] [1776847790.803562989] [slam_data_collector]: OFFBOARD mode command sent
+[INFO] [1776847791.109050352] [slam_data_collector]: ARM command sent
+[INFO] [1776847808.238949344] [slam_data_collector]: Z-filter set (confirmed): [0.50m, 1.50m]
+[INFO] [1776847850.636722442] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776847894.770977675] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776847938.899413909] [slam_data_collector]: Z-filter set (confirmed): [3.50m, 4.50m]
+[Transfer] Model:     lightweight_train/results_3d_shape_delta_800k_maxsteps600/models/slam3d_180000_steps.zip
+[Transfer] VecNorm:   lightweight_train/results_3d_shape_delta_800k_maxsteps600/models/slam3d_vecnormalize_180000_steps.compat.pkl
+[Transfer] Episodes:  1
+[Transfer] EMA α:     0.50  (motion-safety filter active)
+[Transfer] Output:    logs/gazebo_transfer
+[ActiveSLAMEnv] Waiting for data... (pos=N map=N)
+[ActiveSLAMEnv] Waiting for data... (pos=N map=N)
+[ActiveSLAMEnv] Sensor data received (position + map).
+[ActiveSLAMEnv] Z-filter: [0.5m, 1.5m] at alt=1.0m
+[Transfer] Loading VecNormalize stats...
+[Transfer] Loading model...
+[Transfer] Model loaded.
+
+[Transfer] === Episode 0/1 -> frontier_diag_ep0_20260422_084947.csv ===
+
+[ActiveSLAMEnv] === RESET (Episode 1) ===
+[ActiveSLAMEnv] First episode — arming and taking off...
+[ActiveSLAMEnv] Arming and taking off to 1.0m...
+[ActiveSLAMEnv] Drone ARMED successfully (attempt 1).
+[ActiveSLAMEnv] Reached altitude: 0.80m (target: 1.0m)
+[ActiveSLAMEnv] Post-takeoff stabilization (3s)...
+[ActiveSLAMEnv] Stabilized at altitude: 0.87m
+[ActiveSLAMEnv] Z-filter: [0.5m, 1.5m] at alt=1.0m
+[ActiveSLAMEnv] Episode 1 ready. Known cells: 782, Cov: 0.0199
+[frontier_debug step=1] grid shape=56x175 unknown=9016 free=1 occupied=783 free∧adj_unknown=0
+[frontier_debug step=10] grid shape=56x175 unknown=9002 free=1 occupied=797 free∧adj_unknown=0
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[frontier_debug step=50] grid shape=59x175 unknown=9259 free=6 occupied=1060 free∧adj_unknown=0
+[Step 50/2000] R=5.79 cov=10.3% cov_trace=0.3469 alt=3.0m frontiers=0 near_f=infm new_cells=3
+[ActiveSLAMEnv] Z-filter: [3.5m, 4.5m] at alt=4.0m
+[ActiveSLAMEnv] Altitude corrected: 3.75m → 3.73m (target: 4.0m, took 3.0s)
+[frontier_debug step=100] grid shape=60x175 unknown=9320 free=7 occupied=1173 free∧adj_unknown=0
+[Step 100/2000] R=2.35 cov=11.2% cov_trace=0.3149 alt=4.0m frontiers=0 near_f=infm new_cells=1
+  step 100: cov=10.07% trace=0.315 loops=3 trk_lost=0
+[Transfer] Wrote logs/gazebo_transfer/frontier_diag_ep0_20260422_084947.csv (100 steps, final cov=10.07%)
+
+[Transfer] All episodes complete.
+Exception in thread Thread-1 (spin):
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.10/threading.py", line 953, in run

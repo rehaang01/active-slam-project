@@ -1,0 +1,64 @@
+[INFO] [1776804929.582239694] [slam_data_collector]: SLAM data collector initialized (v2 — fixed)
+[INFO] [1776804929.582678637] [slam_data_collector]:   Covariance: /rtabmap/localization_pose (6-DOF)
+[INFO] [1776804929.582986912] [slam_data_collector]:   3D map:     /rtabmap/octomap_full
+[INFO] [1776804929.583346407] [slam_data_collector]:   2D map:     /rtabmap/octomap_grid (Z-filterable)
+[INFO] [1776804929.583705142] [slam_data_collector]:   LiDAR:      /scan (360° + directional, body-frame corrected)
+[INFO] [1776804929.583977659] [slam_data_collector]:   Depth:      /depth_camera (reactive avoidance)
+[INFO] [1776804929.584225015] [slam_data_collector]:   Tracking:   odom-timeout based (1.5s threshold)
+[INFO] [1776804930.641624499] [slam_data_collector]: Z-filter set (confirmed): [0.50m, 1.50m]
+[INFO] [1776804938.889820049] [slam_data_collector]: OFFBOARD mode command sent
+[INFO] [1776804939.192872831] [slam_data_collector]: ARM command sent
+[INFO] [1776804952.796519599] [slam_data_collector]: Z-filter set (confirmed): [0.50m, 1.50m]
+[INFO] [1776804995.108296764] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776805040.614839387] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776805086.352735001] [slam_data_collector]: Z-filter set (confirmed): [3.50m, 4.50m]
+[INFO] [1776805204.315865236] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776805254.362173779] [slam_data_collector]: Z-filter set (confirmed): [3.50m, 4.50m]
+[INFO] [1776805337.012495199] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[Transfer] Model:     lightweight_train/results_3d_shape_delta_800k_maxsteps600/models/slam3d_180000_steps.zip
+[Transfer] VecNorm:   lightweight_train/results_3d_shape_delta_800k_maxsteps600/models/slam3d_vecnormalize_180000_steps.compat.pkl
+[Transfer] Episodes:  1
+[Transfer] EMA α:     0.50  (motion-safety filter active)
+[Transfer] Output:    logs/gazebo_transfer
+[ActiveSLAMEnv] Waiting for data... (pos=N map=N)
+[ActiveSLAMEnv] Waiting for data... (pos=N map=N)
+[ActiveSLAMEnv] Sensor data received (position + map).
+[ActiveSLAMEnv] Z-filter: [0.5m, 1.5m] at alt=1.0m
+[Transfer] Loading VecNormalize stats...
+[Transfer] Loading model...
+[Transfer] Model loaded.
+
+[Transfer] === Episode 0/1 -> smoke_s42_ms600_ep0_20260421_205535.csv ===
+
+[ActiveSLAMEnv] === RESET (Episode 1) ===
+[ActiveSLAMEnv] First episode — arming and taking off...
+[ActiveSLAMEnv] Arming and taking off to 1.0m...
+[ActiveSLAMEnv] Drone ARMED successfully (attempt 1).
+[ActiveSLAMEnv] Reached altitude: 0.81m (target: 1.0m)
+[ActiveSLAMEnv] Post-takeoff stabilization (3s)...
+[ActiveSLAMEnv] Stabilized at altitude: 1.05m
+[ActiveSLAMEnv] Z-filter: [0.5m, 1.5m] at alt=1.0m
+[ActiveSLAMEnv] Episode 1 ready. Known cells: 743, Cov: 0.0196
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[Step 50/2000] R=-1.12 cov=7.4% cov_trace=0.4682 alt=3.0m frontiers=0 near_f=infm new_cells=0
+[ActiveSLAMEnv] Z-filter: [3.5m, 4.5m] at alt=4.0m
+[Step 100/2000] R=-1.11 cov=7.4% cov_trace=0.6874 alt=4.0m frontiers=0 near_f=infm new_cells=0
+  step 100: cov=7.39% trace=0.687 loops=4 trk_lost=0
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[ActiveSLAMEnv] Altitude corrected: 3.91m → 3.15m (target: 3.0m, took 1.4s)
+[ActiveSLAMEnv] Z-filter: [3.5m, 4.5m] at alt=4.0m
+[Step 150/2000] R=-1.18 cov=10.2% cov_trace=0.4583 alt=4.0m frontiers=0 near_f=infm new_cells=0
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[Step 200/2000] R=-1.12 cov=10.7% cov_trace=0.3198 alt=3.0m frontiers=0 near_f=infm new_cells=0
+  step 200: cov=8.95% trace=0.320 loops=8 trk_lost=0
+[Transfer] Wrote logs/gazebo_transfer/smoke_s42_ms600_ep0_20260421_205535.csv (200 steps, final cov=8.95%)
+
+[Transfer] All episodes complete.
+Exception in thread Thread-1 (spin):
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.10/threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 294, in spin

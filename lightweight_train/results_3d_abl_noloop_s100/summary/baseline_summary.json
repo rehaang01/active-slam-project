@@ -1,0 +1,74 @@
+{
+  "Random Walk": {
+    "method": "Random Walk",
+    "episodes": 50,
+    "final_coverage": 0.5568184564687207,
+    "final_cov_trace": 3.649349504376044,
+    "final_loop_closures": 5.98,
+    "final_altitude_changes": 16.92,
+    "final_cov_alt0": 0.5125526213560514,
+    "final_cov_alt1": 0.6113753318847086,
+    "final_cov_alt2": 0.5904892045225888,
+    "final_cov_alt3": 0.5118966187961952
+  },
+  "Nearest Frontier": {
+    "method": "Nearest Frontier",
+    "episodes": 50,
+    "final_coverage": 0.5223640142810568,
+    "final_cov_trace": 3.737515274487771,
+    "final_loop_closures": 0.02,
+    "final_altitude_changes": 3.26,
+    "final_cov_alt0": 0.5317945626405587,
+    "final_cov_alt1": 0.6504354519125237,
+    "final_cov_alt2": 0.5595075168267762,
+    "final_cov_alt3": 0.3535150736964179
+  },
+  "Spiral": {
+    "method": "Spiral",
+    "episodes": 50,
+    "final_coverage": 0.28817327355082906,
+    "final_cov_trace": 2.3968523031105655,
+    "final_loop_closures": 11.44,
+    "final_altitude_changes": 2.92,
+    "final_cov_alt0": 0.25093449518612654,
+    "final_cov_alt1": 0.29543587391704984,
+    "final_cov_alt2": 0.2959856322422973,
+    "final_cov_alt3": 0.3076623267581672
+  },
+  "Potential Field": {
+    "method": "Potential Field",
+    "episodes": 50,
+    "final_coverage": 0.4355157608121278,
+    "final_cov_trace": 2.4625183301976397,
+    "final_loop_closures": 1.7,
+    "final_altitude_changes": 1.78,
+    "final_cov_alt0": 0.46412752926438716,
+    "final_cov_alt1": 0.5265960433933433,
+    "final_cov_alt2": 0.42324869947355076,
+    "final_cov_alt3": 0.33300147250288376
+  },
+  "Greedy Info Gain": {
+    "method": "Greedy Info Gain",
+    "episodes": 50,
+    "final_coverage": 0.7941420958901362,
+    "final_cov_trace": 3.7333430605762006,
+    "final_loop_closures": 0.36,
+    "final_altitude_changes": 3.2,
+    "final_cov_alt0": 0.7968964272537833,
+    "final_cov_alt1": 0.850759105342963,
+    "final_cov_alt2": 0.819323962442321,
+    "final_cov_alt3": 0.7122087655693065
+  },
+  "RRT Explorer": {
+    "method": "RRT Explorer",
+    "episodes": 50,
+    "final_coverage": 0.43566793518666996,
+    "final_cov_trace": 3.6225671931433676,
+    "final_loop_closures": 0.4,
+    "final_altitude_changes": 1.82,
+    "final_cov_alt0": 0.5414422413685412,
+    "final_cov_alt1": 0.6138119911560116,
+    "final_cov_alt2": 0.4184502081097506,
+    "final_cov_alt3": 0.18243150398743738
+  }
+}

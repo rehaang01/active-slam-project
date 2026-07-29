@@ -1,0 +1,68 @@
+[INFO] [1776863670.414369257] [slam_data_collector]: SLAM data collector initialized (v2 — fixed)
+[INFO] [1776863670.414762801] [slam_data_collector]:   Covariance: /rtabmap/localization_pose (6-DOF)
+[INFO] [1776863670.415024773] [slam_data_collector]:   3D map:     /rtabmap/octomap_full
+[INFO] [1776863670.415265592] [slam_data_collector]:   2D map:     /rtabmap/octomap_grid (Z-filterable)
+[INFO] [1776863670.415501566] [slam_data_collector]:   LiDAR:      /scan (360° + directional, body-frame corrected)
+[INFO] [1776863670.415768164] [slam_data_collector]:   Depth:      /depth_camera (reactive avoidance)
+[INFO] [1776863670.416067951] [slam_data_collector]:   Tracking:   odom-timeout based (1.5s threshold)
+[INFO] [1776863672.977436447] [slam_data_collector]: Z-filter set (confirmed): [0.50m, 1.50m]
+[INFO] [1776863683.234883363] [slam_data_collector]: OFFBOARD mode command sent
+[INFO] [1776863683.536611964] [slam_data_collector]: ARM command sent
+[INFO] [1776863706.178807499] [slam_data_collector]: Z-filter set (confirmed): [0.50m, 1.50m]
+[INFO] [1776863748.794561245] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776863794.428268748] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776864179.054679301] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776864224.677013042] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776864280.424797670] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776864326.234883768] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[Transfer] Model:     lightweight_train/results_3d_shape_delta_800k_maxsteps600/models/slam3d_180000_steps.zip
+[Transfer] VecNorm:   lightweight_train/results_3d_shape_delta_800k_maxsteps600/models/slam3d_vecnormalize_180000_steps.compat.pkl
+[Transfer] Episodes:  1
+[Transfer] EMA α:     xy=0.80  dz=0.30
+[Transfer] Output:    logs/gazebo_transfer
+[ActiveSLAMEnv] Waiting for data... (pos=N map=N)
+[ActiveSLAMEnv] Waiting for data... (pos=Y map=N)
+[ActiveSLAMEnv] Waiting for data... (pos=Y map=N)
+[ActiveSLAMEnv] Waiting for data... (pos=Y map=N)
+[ActiveSLAMEnv] Waiting for data... (pos=Y map=N)
+[ActiveSLAMEnv] Sensor data received (position + map).
+[ActiveSLAMEnv] Z-filter: [0.5m, 1.5m] at alt=1.0m
+[Transfer] Loading VecNormalize stats...
+[Transfer] Loading model...
+[Transfer] Model loaded.
+
+[Transfer] === Episode 0/1 -> alt_cap_xy08_dz03_ep0_20260422_131440.csv ===
+
+[ActiveSLAMEnv] === RESET (Episode 1) ===
+[ActiveSLAMEnv] First episode — arming and taking off...
+[ActiveSLAMEnv] Arming and taking off to 1.0m...
+[ActiveSLAMEnv] Drone ARMED successfully (attempt 1).
+[ActiveSLAMEnv] Reached altitude: 0.80m (target: 1.0m)
+[ActiveSLAMEnv] Post-takeoff stabilization (3s)...
+[ActiveSLAMEnv] Stabilized at altitude: 0.94m
+[ActiveSLAMEnv] Z-filter: [0.5m, 1.5m] at alt=1.0m
+[ActiveSLAMEnv] Episode 1 ready. Known cells: 738, Cov: 0.0076
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[Step 50/2000] R=1.89 cov=9.3% cov_trace=0.1722 alt=3.0m frontiers=14 near_f=0.3m new_cells=0
+[Reward] Loop closure! ID=46, +0.3
+[Reward] Loop closure! ID=46, +0.3
+[Step 100/2000] R=5.67 cov=9.3% cov_trace=0.3103 alt=3.0m frontiers=17 near_f=0.4m new_cells=1
+  step 100: cov=6.63% trace=0.310 loops=3 trk_lost=0
+[Step 150/2000] R=1.82 cov=10.9% cov_trace=0.6449 alt=3.0m frontiers=18 near_f=0.3m new_cells=0
+[Reward] Loop closure! ID=92, +0.3
+[Reward] Loop closure! ID=102, +0.3
+[Step 200/2000] R=14.30 cov=11.6% cov_trace=0.5910 alt=3.0m frontiers=18 near_f=0.3m new_cells=11
+  step 200: cov=7.22% trace=0.591 loops=5 trk_lost=0
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[ActiveSLAMEnv] Altitude corrected: 2.97m → 2.33m (target: 2.0m, took 3.0s)
+[Step 250/2000] R=12.82 cov=14.5% cov_trace=0.1978 alt=2.0m frontiers=17 near_f=0.3m new_cells=8
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[Step 300/2000] R=1.83 cov=14.8% cov_trace=0.2017 alt=3.0m frontiers=19 near_f=0.2m new_cells=0
+  step 300: cov=9.91% trace=0.202 loops=10 trk_lost=0
+[Transfer] Wrote logs/gazebo_transfer/alt_cap_xy08_dz03_ep0_20260422_131440.csv (300 steps, final cov=9.91%)
+
+[Transfer] All episodes complete.
+terminate called without an active exception

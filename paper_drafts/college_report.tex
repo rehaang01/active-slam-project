@@ -1,0 +1,256 @@
+%% IEEE Conference Template — 4-page college B.Tech project report.
+%% Compressed from the full conference manuscript: drops the architecture
+%% TikZ diagram, the per-altitude training-curve figure, and most of the
+%% per-figure appendices; keeps the methodology, reward design, main
+%% comparison, statistical analysis, and ablations.
+%% All technical content is kept consistent with the corrected main.tex
+%% (single CoordConv + 3 plain Conv2D, σ_t scalar surrogate, 15-term
+%% reward with Δσ, MS600 stat tests, base-recipe ablations).
+
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{bbm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{balance}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{url}
+\usepackage{hyperref}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{\huge Enhancing Coverage and Localization in Multi-Altitude UAV Active SLAM Using Recurrent Proximal Policy Optimization}
+
+\author{\IEEEauthorblockN{Anjali Gupta}
+\IEEEauthorblockA{\textit{Department of Electronics Engineering} \\
+\textit{Indian Institute of Technology (BHU) Varanasi}\\
+Varanasi, Uttar Pradesh, India\\
+anjali.gupta.ece23@itbhu.ac.in}
+\and
+\IEEEauthorblockN{Rehaan Goenka}
+\IEEEauthorblockA{\textit{Department of Electronics Engineering} \\
+\textit{Indian Institute of Technology (BHU) Varanasi}\\
+Varanasi, Uttar Pradesh, India\\
+rehaan.goenka.ece23@itbhu.ac.in}
+}
+
+\maketitle
+
+%==================================================================
+\begin{abstract}
+Active Simultaneous Localization and Mapping (SLAM) for Unmanned Aerial Vehicles (UAVs) requires jointly maximizing map coverage and managing localization uncertainty while deciding at which altitude to fly --- a coupling that classical frontier and information-theoretic planners, restricted to a single planar slice, do not naturally express. We propose a reinforcement-learning framework that optimizes both objectives together. A CoordConv--LSTM Recurrent Proximal Policy Optimization (PPO) actor-critic, trained on a lightweight $48{\times}48{\times}4$-altitude grid environment, learns to vote horizontal displacement and altitude changes under a composite reward that combines per-step coverage gain, frontier progress, loop-closure bonuses, altitude-breadth incentives, and a novel uncertainty-trace shaping term $\Delta\sigma$. Evaluated across three training seeds and fifty held-out maps against six classical baselines and a Vanilla PPO learned baseline, our policy delivers $\mathbf{91.90 \pm 1.72\%}$ final coverage, balanced exploration of \emph{every} altitude layer, and a roughly $2{\times}$ faster time to $50\%$ coverage, while matching the best baseline on localization uncertainty. Ablations on the base recipe show that the breadth bonus stabilizes per-altitude allocation across seeds while the loop-closure reward primarily reduces localization uncertainty.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Active SLAM, UAV exploration, reinforcement learning, recurrent PPO, multi-altitude planning.
+\end{IEEEkeywords}
+
+%==================================================================
+\section{Introduction}
+
+Autonomous exploration of \emph{a-priori} unknown three-dimensional environments is foundational for UAVs deployed in warehouses, tunnels, disaster zones, and inspection tasks~\cite{qin2019autonomous, zhang2026adaptive}. The problem is doubly coupled: the agent must move to reveal new free space while localizing itself accurately enough that what it reveals can be registered into a consistent global map --- the defining concern of \emph{active SLAM}~\cite{placed2023survey, zhang2026u}.
+
+Classical pipelines combine a frontier-based or information-theoretic controller with a back-end SLAM estimator. They are interpretable and often effective, but inherit two limitations. First, they plan on a single 2D occupancy grid, leaving altitude as a manually-scheduled hyperparameter --- a mismatch with UAV stacks that operate in 3D volumetric space and can exploit vertical maneuvers to see above, between, and below shelves. Second, hand-crafted cost functions struggle to trade off exploration breadth, loop-closure opportunity, and localization uncertainty in a single policy.
+
+Deep Reinforcement Learning (DRL) offers an alternative: given the right observation space and reward, a neural policy can learn to juggle all three concerns end-to-end. Recent work has shown coverage results on 2D grids~\cite{yin2025maslam,chen2024lidar,zhao2024ddpg} and obstacle avoidance for UAVs~\cite{xu2025navrl}, but altitude-aware active-SLAM policies remain under-explored, and reward engineering for trainable covariance reduction is under-documented.
+
+Our contributions are: \emph{(i)}~we recast altitude as a discrete decision variable via an altitude vote $dz_t$ gated by a minimum-dwell constraint, fed back into the observation through a least-explored-altitude slice and a cross-altitude visit-mask summary; \emph{(ii)}~we couple position-aware perception with temporal memory using one CoordConv plus three plain Conv2D stages, an early-fusion MLP, and an LSTM backbone; \emph{(iii)}~we make uncertainty reduction trainable via a fifteen-term composite reward whose novel $\Delta\sigma$ term turns sparse loop-closure events into a dense gradient on a scalar SLAM-uncertainty surrogate $\sigma_t$ (proxy for $\mathrm{Tr}(\Sigma_t)$); and \emph{(iv)}~we benchmark against six classical baselines and a Vanilla PPO learned baseline across three seeds and fifty held-out maps, with ablations isolating each reward term's contribution.
+
+%==================================================================
+\section{Related Work}
+
+\textbf{Classical Active SLAM in 3D:} The Placed et al.\ survey~\cite{placed2023survey} catalogs frontier, information-theoretic, and sampling-based exploration through 2023. Asgharivaskasi and Atanasov~\cite{asgharivaskasi2023semantic} optimize Shannon mutual information over semantic 3D octomaps; \cite{asgharivaskasi2025riemannian, ebadi2023extreme, azpurua2023subterranean} extend to multi-robot, extreme, and subterranean settings. These methods plan with hand-crafted costs in continuous 3D and do not decompose the vertical axis into discrete altitude decisions.
+
+\textbf{Learned 3D Exploration:} Chen et al.~\cite{chen2024lidar} present a LiDAR-based DRL active-SLAM policy; Zhao and Hwang~\cite{zhao2024ddpg} propose a DDPG variant for indoor mapping; Yin et al.'s MA-SLAM~\cite{yin2025maslam} contributes a structured map representation for large-scale ground-robot exploration; \cite{garaffa2023survey, wang2024exploration, botteghi2021curiosity} cover the broader literature. None is altitude-aware: existing 3D-capable methods operate on full continuous 3D actions or a single planar slice.
+
+\textbf{RL for UAVs:} Xu et al.'s NavRL~\cite{xu2025navrl} trains PPO for safe 3D UAV flight, but its objective is collision-free goal-reaching, not active mapping. Kaufmann et al.~\cite{kaufmann2023racing} surpass human champions at 3D drone racing --- again navigation, not exploration. Ni et al.~\cite{ni2022recurrent} establish recurrent model-free RL as a strong POMDP baseline (motivating our LSTM backbone); Raffin et al.~\cite{raffin2021sb3} provide the Stable-Baselines3 Recurrent PPO implementation we use. Across these threads, no prior method jointly addresses dwell-gated altitude decisions, dense uncertainty-trace shaping, and recurrent early fusion of map and scalar state in a single learned policy --- the gap our framework closes.
+
+%==================================================================
+\section{System Model and Problem Formulation}
+
+\subsection{System Model}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth,height=0.32\textwidth,keepaspectratio]{figures/system_model.png}
+\caption{System model: 2D LiDAR feeds an RTAB-Map-inspired SLAM proxy producing observation $o_t$ for the recurrent policy, which emits action $a_t$ closing the perception--action loop.}
+\label{fig:sysmodel}
+\end{figure*}
+
+Fig.~\ref{fig:sysmodel} depicts the closed-loop system. A quadrotor carries a 2D LiDAR scanner performing a $360^\circ$ sweep with $N_r\!=\!36$ uniformly-spaced beams at the current altitude, plus a half-range sweep on each adjacent layer to emulate inter-layer sensor bleed. The warehouse is partitioned into four altitude layers $h_{\text{alt}}\!\in\!\{1,2,3,4\}\,\text{m}$ over an $X\!\times\!Y$ grid; the unknown true 3D occupancy is a binary tensor $\mathcal{M}^{\star}\!\in\!\{0,1\}^{X\times Y\times 4}$ to be reconstructed within a fixed episode budget. LiDAR returns are fused by an RTAB-Map-inspired SLAM proxy maintaining an occupancy estimate $\mathcal{M}_t$, a pose estimate $\hat{\xi}_t\!=\!(\hat{x}_t,\hat{y}_t,\hat{z}_t)$, and a scalar uncertainty surrogate $\sigma_t\!\in\![0,4]$ (proxy for $\mathrm{Tr}(\Sigma_t)$) that updates as $\sigma_{t+1}\!=\!\min(\sigma_t + 0.03\,\|\Delta p_t\| + 0.15\,\mathbbm{1}[\text{alt change}],\,4)$ and is multiplied by $0.70$ on a deterministic geometric loop closure (agent re-enters the $r\!<\!4$ neighborhood of a stored landmark after $\geq\!40$ steps and $24$ units of travel).
+
+The SLAM state is lossy-compressed into observation $o_t\!=\!(M_t,v_t)$. The map tensor $M_t\!\in\![0,1]^{5\times 48\times 48}$ stacks five altitude-aware channels: current-altitude occupancy; current-altitude binary visit mask within a $7{\times}7$ window; exponentially-decaying trajectory trail; least-explored-altitude occupancy; and cross-altitude mean visit mask. The scalar vector $v_t\!\in\![0,1]^{10}$ encodes normalized uncertainty $\sigma_t/4$, frontier count, total coverage, nearest-frontier distance and direction, altitude index, current-altitude coverage, best- and worst-other-altitude coverage, and step fraction $t/T_{\max}$. The recurrent policy $\pi_\theta(a_t\!\mid\!o_t,h_t)$ emits $a_t\!=\!(dx_t,dy_t,dz_t)\!\in\![-1,1]^3$: $dx_t,dy_t$ drive a clipped horizontal velocity command; $dz_t$ is an altitude \emph{vote} thresholded at $\tau_{\text{alt}}\!=\!0.3$ and gated by a minimum dwell of $D\!=\!20$ steps to prevent thrashing the SLAM Z-filter.
+
+\subsection{Problem Formulation}
+
+We cast the task as a POMDP $\mathcal{P}\!=\!\langle\mathcal{S},\mathcal{A},\mathcal{O},T,O_{\text{obs}},R,\gamma,T_{\max}\rangle$ with hidden state $s_t = (x_t, y_t, z_t, \mathcal{M}_t, \sigma_t)$; heading $\psi_t$ is implicit in the velocity command and recomputed on demand from $(p_t-p_{t-1})$. Letting $\pi_\theta\!:\!\mathcal{O}\!\times\!\mathcal{H}\!\to\!\Delta(\mathcal{A})$ be the recurrent policy, the expected discounted return is
+\begin{equation}
+J(\theta) \,=\, \mathbb{E}_{\tau\sim\pi_\theta}\!\left[\,\sum_{t=0}^{T_{\max}-1}\gamma^{\,t}\, R(s_t,a_t)\,\right],
+\label{eq:J}
+\end{equation}
+with $\gamma\!=\!0.995$ giving an effective horizon $1/(1-\gamma)\!\approx\!200$ steps, matched to the $T_{\max}\!=\!600$-step budget of the headline recipe. The target is $\theta^{\star} = \arg\max_{\theta} J(\theta)$, subject to $a_t \in [-1,1]^3$, $\mathrm{alt}(t) = \lfloor z_t\rfloor - 1\in\{0,1,2,3\}$, $t - \tau_{\text{last}}(t)\geq D=20$ on altitude switches, $(x_t,y_t,z_t)\in\mathcal{F}$ (collision-free configuration space), $T_{\max}\!\in\!\{400,600\}$, and early termination on $\mathrm{Cov}(s_t)\geq 0.95$. Defining $\mathcal{K}(\theta)\!:=\!\mathbb{E}[\mathrm{Cov}(s_{T_{\max}})]$ and $\mathcal{U}(\theta)\!:=\!\mathbb{E}[\sigma_{T_{\max}}]$, the objective admits the scalarized multi-objective form
+\begin{equation}
+J(\theta) = \underbrace{\mathcal{K}(\theta)}_{\text{max.\ cov.}} - \lambda_\sigma\underbrace{\mathcal{U}(\theta)}_{\text{min.\ unc.}} + \underbrace{\Psi(\theta)}_{\text{shaping}},
+\label{eq:multiobj}
+\end{equation}
+with $\Psi(\theta)$ collecting the dense per-step shaping terms of Section~\ref{sec:reward}.
+
+%==================================================================
+\section{Proposed Methodology}\label{sec:arch}
+
+The policy $\pi_\theta$ is a CoordConv--LSTM actor-critic trained with Recurrent PPO~\cite{raffin2021sb3,ni2022recurrent}. Three task requirements shape the design: \emph{(i)} filters must exploit absolute spatial position; \emph{(ii)} the spatial map and scalar feature vector must be fused \emph{before} the policy commits to an action; and \emph{(iii)} partial observability demands memory across the $600$-step episode.
+
+\textbf{Spatial Map Encoder:} Starting from $M_t\!\in\![0,1]^{5{\times}48{\times}48}$, one CoordConv (kernel $5$, stride $2$) and three plain Conv2D stages (two stride-$2$ followed by one stride-$1$, all kernel $3$) compute
+\begin{equation}
+F^{(\ell)}_t = \sigma\big(\mathrm{GN}_8\big(W^{(\ell)}\!*\!\widetilde{F}^{(\ell-1)}_t + b^{(\ell)}\big)\big),
+\label{eq:coordconv}
+\end{equation}
+with channel widths $32\!\to\!64\!\to\!64\!\to\!64$, ReLU activation, and $8$-group GroupNorm. Only the first stage is coordinate-augmented: $\widetilde{F}^{(0)}_t$ stacks $M_t$ with two normalized coordinate maps $(i/H, j/W)$, giving filters direct access to absolute position --- a property plain convolutions lack and which matters in active SLAM where the same local pattern has different navigational value at the map's center vs.\ its boundary. The three strided stages collapse the $48{\times}48$ input through $24{\times}24\!\to\!12{\times}12\!\to\!6{\times}6$; the fourth refines features at $6{\times}6$, and an adaptive $6{\times}6$ average pool followed by flattening yields the map embedding $z^{\text{map}}_t \in \mathbb{R}^{2304}$.
+
+\textbf{Early Fusion and Recurrent Backbone:} The scalar vector $v_t\!\in\![0,1]^{10}$ is layer-normalized and embedded by an MLP (FC-64 $\to$ FC-32) into $z^{\text{scl}}_t\!\in\!\mathbb{R}^{32}$. Map and scalar embeddings are concatenated and re-projected by a fusion MLP, $z_t = g_{\psi_f}([z^{\text{map}}_t;\,z^{\text{scl}}_t]) \in \mathbb{R}^{256}$. A single-layer LSTM with hidden size $128$ propagates $(h_t, c_t) = \mathrm{LSTM}_\phi(z_t; h_{t-1}, c_{t-1})$ across the episode; early fusion lets the policy reason over spatial layout and scalar state jointly (``move toward this frontier \emph{because} uncertainty is high'').
+
+\textbf{Actor and Critic Heads:} Two independent $(256,256)$ MLPs branch from $h_t$. The actor parameterizes a diagonal Gaussian $a_t \sim \mathcal{N}(\mu_t, \mathrm{diag}(\sigma_t^2))$ over $\mathbb{R}^3$, and the critic outputs $V_{\theta_V}(o_t)$. Training minimizes
+\begin{equation}
+\mathcal{L} = \mathcal{L}^{\text{CLIP}} + c_1(V_{\theta_V}(o_t)-\hat{R}_t)^2 - c_2\mathcal{H}[\pi_{\theta_\pi}],
+\label{eq:ppo_loss}
+\end{equation}
+where $\mathcal{L}^{\text{CLIP}}$ is PPO's clipped-surrogate objective, $\hat{R}_t$ is the GAE target, and $\mathcal{H}[\cdot]$ is an entropy bonus.
+
+\subsection{Reward Design}\label{sec:reward}
+
+The per-step reward $r_t$ is a weighted sum of fifteen components (Table~\ref{tab:reward}), with terminal bonuses on episode end. Three design choices are highlighted. \emph{Localization shaping:} the novel $\Delta\sigma$ term ($w\!=\!-0.8$) densifies the otherwise sparse loop-closure event (which multiplicatively cuts $\sigma$ by $0.70$) into a per-step signal, biasing the policy toward uncertainty-reducing actions without dominating the sparser exploration terms. \emph{Altitude breadth:} the per-altitude breadth bonus ($+60$ on first reaching $40\%$ coverage, paid up to $4{\times}$, capped at $240$) back-loads credit onto neglected layers; the terminal coverage bonus is itself breadth-weighted as $300\!\cdot\!\mathrm{Cov}\!\cdot\!(0.5+0.5\rho)$ with $\rho$ the fraction of altitudes past $40\%$. \emph{Stagnation:} a $-15$ penalty fires when per-altitude coverage gain is $<\!2\%$ over a $25$-step window, preventing convergence on local minima.
+
+\begin{table}[t]
+\caption{Reward components ($\mathbbm{1}[\cdot]$: indicator). $\Delta\sigma$ is our contribution (MS600 only); Vanilla PPO keeps only $\Delta n_{\text{cell}}$, per-step, and collision.}
+\label{tab:reward}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}l r p{4.0cm}@{}}
+\toprule
+Term & Wt. & Semantics \\
+\midrule
+$\Delta n_{\text{cell}}$ & $+1.0$ & New cells observed this step \\
+$\Delta d_{\text{front}}$ & $+2.0$ & Progress to nearest frontier \\
+$\mathbbm{1}[\text{coll.}]$ & $-1.0$ & Hit an occupied cell \\
+per-step & $-0.05$ & Implicit budget pressure \\
+revisit & $-0.15$ & Mean visited-mask in $7{\times}7$ window \\
+$\mathbbm{1}[\text{new alt}]$ & $+25.0$ & First visit to a new altitude \\
+$\mathbbm{1}[\text{alt sw}]$ & $-3.0$ & Cost of any altitude change \\
+$\mathbbm{1}[\text{alt sw bad}]$ & $-2.0$ & Switched to a more-explored layer \\
+$\mathbbm{1}[\text{least-expl.}]$ & $+0.5$ & While at least-explored layer \\
+$\mathbbm{1}[\text{stag.}]$ & $-15.0$ & $25$ steps with $<\!2\%$ per-alt gain \\
+$\mathbbm{1}[\text{cov}\!\geq\!0.4]$ & $+30.0$ & One-time global $40\%$ bonus \\
+$\mathbbm{1}[\text{LC}]$ & $+25.0$ & Loop-closure event this step \\
+$\mathbbm{1}[\text{breadth}_a]$ & $+60.0$ & First time alt.\ $a$ crosses $40\%$ \\
+$\sigma_t/4$ & $-0.8$ & Absolute uncertainty penalty \\
+$\Delta\sigma$ & $-0.8$ & Step-wise uncertainty change (\emph{ours}) \\
+\midrule
+Terminal cov.\ & $+300$ & $\times\,\mathrm{Cov}\!\cdot\!(0.5+0.5\rho)$ \\
+Terminal $\sigma$ & $-120$ & $\times\,\sigma_T/4$ at episode end \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%==================================================================
+\section{Performance Evaluation}
+
+\subsection{Experimental Setup}
+
+Three independent seeds $\{42,100,200\}$ share an identical Recurrent-PPO setup: linear LR schedule $3{\times}10^{-4}\!\to\!10^{-5}$, entropy $0.02\!\to\!0.002$, $4$ parallel envs, $n_{\text{steps}}{=}256$, batch $128$, $\gamma{=}0.995$, GAE $\lambda{=}0.97$, clip $0.2$, with reward-only \texttt{VecNormalize} (clip $15$). Each seed trains for $800{,}000$ steps with checkpoints every $60{,}000$ steps, under a three-phase difficulty curriculum (\texttt{easy}$\to$\texttt{medium} at $120$k, \texttt{medium}$\to$\texttt{hard} at $300$k). For each seed we select the earliest checkpoint that beats Greedy Information Gain by $\geq\!3$ pts coverage, achieves $\sigma_T\!\leq\!0.80\!\times\!$ Greedy's, and keeps every per-altitude coverage $\geq\!25\%$; for the headline ``MS600'' recipe ($T_{\max}\!=\!600$, $\Delta\sigma$ enabled) this rule fires at step $180{,}000$ on every seed. Six classical baselines (Random Walk, Nearest Frontier, Spiral, Potential Field, Greedy Information Gain, RRT Explorer~\cite{placed2023survey}) and a Vanilla PPO that shares our network, hyperparameters, and curriculum but disables every shaping reward except $\Delta n_{\text{cell}}$/per-step/collision are evaluated on the same $50$ held-out maps with identical initial conditions ($n\!=\!150$ episodes total for RL); significance is assessed via Wilcoxon signed-rank tests with Cliff's $\delta$.
+
+\subsection{Results}\label{sec:results}
+
+\textbf{Main Comparison:} Table~\ref{tab:main} reports the principal methods. Our headline recipe reaches $91.90\!\pm\!1.72\%$ coverage --- a $9.17$-point absolute gain over the best classical baseline (Greedy Information Gain at $82.73\%$) and $5.03$ points over Vanilla PPO. The per-altitude breakdown shows the breadth-reward effect: our policy exceeds $85\%$ on \emph{every} altitude, while Greedy collapses to $69.93\%$ on Alt3 and RRT Explorer to $9.48\%$.
+
+\begin{table}[t]
+\caption{Held-out evaluation (50 maps/seed). RL: mean $\pm$ std over 3 seeds. Best learned in \textbf{bold}, best classical in \textit{italics}. Headline MS600 uses $T_{\max}\!=\!600$; all other learned variants and ablations use $T_{\max}\!=\!400$ on the base recipe.}
+\label{tab:main}
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lrrrrr}
+\toprule
+Method & Cov.\,(\%) & Alt0 & Alt1 & Alt2 & Alt3 \\
+\midrule
+Random Walk & 55.16 & 50.11 & 61.13 & 59.39 & 49.92 \\
+Nearest Frontier & 52.53 & 50.67 & 61.92 & 56.45 & 41.31 \\
+Spiral & 27.94 & 26.23 & 28.66 & 28.49 & 28.27 \\
+Potential Field & 36.26 & 42.58 & 44.55 & 32.14 & 26.41 \\
+\textit{Greedy Info Gain} & \textit{82.73} & 87.01 & 90.67 & 83.90 & 69.93 \\
+RRT Explorer & 39.17 & 58.92 & 60.74 & 29.50 & 9.48 \\
+\midrule
+Vanilla PPO & 86.87\,$\pm$\,1.19 & 77.67 & 92.79 & 93.15 & 83.52 \\
+Ours (base) & 87.56\,$\pm$\,2.45 & 85.26 & 94.78 & 93.26 & 77.12 \\
+Ours $+\Delta\sigma$ & 88.69\,$\pm$\,0.84 & 77.47 & 93.85 & 95.20 & 87.69 \\
+\textbf{Ours $+\Delta\sigma$ + MS600} & \textbf{91.90\,$\pm$\,1.72} & \textbf{88.11} & \textbf{96.85} & \textbf{95.79} & \textbf{86.81} \\
+\midrule
+Abl.\ no LoopClosure & 89.41\,$\pm$\,2.31 & 80.84 & 94.41 & 95.12 & 86.95 \\
+Abl.\ no BreadthBonus & 86.54\,$\pm$\,1.49 & 79.46 & 91.97 & 92.98 & 81.54 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\textbf{Statistical Analysis:} Wilcoxon tests pooled across seeds (Table~\ref{tab:stat}, $n\!=\!150$) reject the null at $p\!<\!10^{-13}$ with $\delta\!>\!0.97$ against every non-learned baseline; the gap against Greedy Info Gain ($p\!=\!8.1{\times}10^{-14}$, $\delta\!=\!{+}0.534$) is itself a large effect, and the gap against Vanilla PPO ($p\!=\!7.4{\times}10^{-11}$, $\delta\!=\!{+}0.486$) isolates the contribution of reward design from architecture and curriculum.
+
+\begin{table}[t]
+\caption{One-sided Wilcoxon tests on coverage, MS600 vs.\ each baseline, pooled across 3 seeds $\times$ 50 episodes. *\,$p{<}0.05$, **\,$p{<}0.01$, ***\,$p{<}0.001$.}
+\label{tab:stat}
+\centering
+\footnotesize
+\begin{tabular}{lrrr}
+\toprule
+Comparison & $p$-value & Cliff's $\delta$ & Effect \\
+\midrule
+Ours vs.\ Random Walk & $1.2{\times}10^{-26}$*** & $+0.990$ & large \\
+Ours vs.\ Nearest Frontier & $1.4{\times}10^{-26}$*** & $+0.979$ & large \\
+Ours vs.\ Spiral & $1.2{\times}10^{-26}$*** & $+1.000$ & large \\
+Ours vs.\ Potential Field & $1.2{\times}10^{-26}$*** & $+0.974$ & large \\
+Ours vs.\ Greedy Info Gain & $8.1{\times}10^{-14}$*** & $+0.534$ & large \\
+Ours vs.\ RRT Explorer & $1.2{\times}10^{-26}$*** & $+0.997$ & large \\
+Ours vs.\ Vanilla PPO & $7.4{\times}10^{-11}$*** & $+0.486$ & large \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Training and Intra-Episode Dynamics:} Fig.~\ref{fig:tc-cov} shows training coverage rising monotonically and exceeding Greedy by step $120$k. Fig.~\ref{fig:ts-cov} shows intra-episode dynamics: the RL policy reaches $50\%$ coverage at step $\sim\!180$ vs.\ $\sim\!370$ (Greedy) and $\sim\!580$ (Nearest Frontier) --- roughly $2{\times}$ faster --- and continues to widen the gap toward the $600$-step horizon.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/training_curve_coverage.png}
+\caption{Coverage vs.\ training steps (mean $\pm$ std, 3 seeds). Dashed: Greedy Info Gain reference.}
+\label{fig:tc-cov}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/timeseries_coverage.png}
+\caption{Intra-episode coverage vs.\ step (mean $\pm$ std, 50 held-out episodes). RL reaches $50\%$ at step $\sim\!180$, $\sim\!2{\times}$ faster than Greedy.}
+\label{fig:ts-cov}
+\end{figure}
+
+\textbf{Ablations:} Two ablations are run on the \emph{base} recipe ($T_{\max}\!=\!400$, no $\Delta\sigma$; mean $87.56\!\pm\!2.45\%$). \emph{No LoopClosure} ($89.41\!\pm\!2.31\%$): mean coverage is statistically indistinguishable from base, but $\sigma_T$ rises from $3.71$ to $3.82$, confirming that the loop-closure reward primarily reduces localization uncertainty rather than improving coverage. \emph{No BreadthBonus} ($86.54\!\pm\!1.49\%$, $-1.02$ pts vs.\ base): the small mean drop hides a doubling of cross-seed std on Alt0/Alt3 ($4.97\%\!\to\!9.85\%$, $4.83\%\!\to\!9.38\%$), showing that the breadth bonus \emph{stabilizes} per-altitude allocation across seeds rather than raising the mean. Together with the $+3.21$-pt MS600 horizon extension, these components account for the full $91.90\%$ headline.
+
+\textbf{Discussion:} Classical baselines either greedily exploit the most informative cell (Greedy, RRT) or follow geometric heuristics (Spiral, Potential Field). Both regimes plateau on the central altitudes and starve the boundary layers (Alt0, Alt3), where shelf-occlusion makes information gain less obvious. Our reward shaping makes boundary layers \emph{individually addressable}: the per-altitude breadth bonus rewards crossing the $40\%$ threshold on each layer separately, and $\Delta\sigma$ keeps the policy revisiting layers where loop closures will collapse uncertainty. The $7.49$ loop closures per episode achieved by our full recipe (vs.\ $0.36$ for Greedy and $3.35$ for Vanilla PPO) confirm the gain comes not from extra exploration steps but from more useful ones.
+
+%==================================================================
+\section{Conclusion and Future Work}
+
+We presented a Recurrent PPO approach to multi-altitude UAV active SLAM. A CoordConv--LSTM actor-critic consumes a five-channel $48{\times}48$ map tensor and a ten-dimensional scalar vector and outputs a three-dimensional action that jointly controls horizontal motion and altitude-layer selection. A fifteen-term composite reward including a novel $\Delta\sigma$ uncertainty-shaping term, a per-altitude breadth bonus, and breadth-weighted terminal credit produces policies reaching $91.90 \pm 1.72\%$ coverage across three seeds and fifty held-out maps, dominating six classical baselines and a Vanilla PPO baseline by large effect sizes (Cliff's $\delta\!\geq\!0.49$). Ablations confirm the breadth bonus stabilizes per-altitude allocation and the loop-closure reward primarily reduces localization uncertainty. Future work will scale grid resolution and altitude count to larger warehouse geometries, replace the scalar uncertainty surrogate with a real RTAB-Map back-end, investigate multi-agent cooperative variants sharing a cross-altitude visit-mask channel, and extend toward physical UAV deployment.
+
+%==================================================================
+\balance
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

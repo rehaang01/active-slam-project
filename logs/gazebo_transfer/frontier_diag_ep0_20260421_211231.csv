@@ -1,0 +1,2 @@
+step,timestamp,coverage,known_cells,total_cells,cov_trace,pos_x,pos_y,altitude,frontier_count,nearest_frontier_dist,loop_closures,tracking_lost_events,new_cells,alt_idx,altitude_changes,cov_alt0,cov_alt1,cov_alt2,cov_alt3,note
+1,24.89126706123352,0.02671082729698818,1121,41968,0.34440988567827224,-0.8088400363922119,-0.5686784982681274,-0.42033952474594116,0,inf,0,0,1121,0,0,0.10684330918795272,0.0,0.0,0.0,done

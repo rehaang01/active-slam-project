@@ -1,0 +1,180 @@
+[INFO] [1776856747.994924619] [slam_data_collector]: SLAM data collector initialized (v2 — fixed)
+[INFO] [1776856747.995691242] [slam_data_collector]:   Covariance: /rtabmap/localization_pose (6-DOF)
+[INFO] [1776856747.996437445] [slam_data_collector]:   3D map:     /rtabmap/octomap_full
+[INFO] [1776856747.996944021] [slam_data_collector]:   2D map:     /rtabmap/octomap_grid (Z-filterable)
+[INFO] [1776856747.997399976] [slam_data_collector]:   LiDAR:      /scan (360° + directional, body-frame corrected)
+[INFO] [1776856747.997634539] [slam_data_collector]:   Depth:      /depth_camera (reactive avoidance)
+[INFO] [1776856747.997874896] [slam_data_collector]:   Tracking:   odom-timeout based (1.5s threshold)
+[INFO] [1776856749.051683518] [slam_data_collector]: Z-filter set (confirmed): [0.50m, 1.50m]
+[INFO] [1776856757.650365600] [slam_data_collector]: OFFBOARD mode command sent
+[INFO] [1776856757.954446005] [slam_data_collector]: ARM command sent
+[INFO] [1776856770.769658805] [slam_data_collector]: Z-filter set (confirmed): [0.50m, 1.50m]
+[INFO] [1776856821.361561210] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776856870.028773779] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776856923.778964885] [slam_data_collector]: Z-filter set (confirmed): [3.50m, 4.50m]
+[INFO] [1776857128.491166646] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776857180.604650038] [slam_data_collector]: Z-filter set (confirmed): [3.50m, 4.50m]
+[INFO] [1776857329.027558790] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776857374.715569079] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776857424.401112154] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776857469.579294174] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776857521.247884695] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776857568.014436030] [slam_data_collector]: Z-filter set (confirmed): [3.50m, 4.50m]
+[INFO] [1776857620.423845387] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776857666.405215897] [slam_data_collector]: Z-filter set (confirmed): [3.50m, 4.50m]
+[INFO] [1776857741.159312401] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776857829.615677624] [slam_data_collector]: Z-filter set (confirmed): [3.50m, 4.50m]
+[INFO] [1776857953.331394117] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776858069.678655654] [slam_data_collector]: Z-filter set (confirmed): [3.50m, 4.50m]
+[INFO] [1776858138.074817089] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776858199.293873950] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776858246.702804447] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776858296.382659546] [slam_data_collector]: Z-filter set (confirmed): [3.50m, 4.50m]
+[INFO] [1776858342.462557836] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776858429.572822372] [slam_data_collector]: Z-filter set (confirmed): [3.50m, 4.50m]
+[INFO] [1776858526.787503761] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776858573.045413877] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776858618.965643123] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776858669.983642311] [slam_data_collector]: Z-filter set (confirmed): [3.50m, 4.50m]
+[INFO] [1776858750.842221777] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776858811.710599705] [slam_data_collector]: Z-filter set (confirmed): [3.50m, 4.50m]
+[INFO] [1776858881.951578349] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776858929.714318499] [slam_data_collector]: Z-filter set (confirmed): [3.50m, 4.50m]
+[INFO] [1776858988.832809897] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776859034.591555661] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776859079.073683450] [slam_data_collector]: Z-filter set (confirmed): [0.50m, 1.50m]
+[INFO] [1776859123.858597136] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776859170.272243096] [slam_data_collector]: Z-filter set (confirmed): [2.50m, 3.50m]
+[INFO] [1776859251.115800542] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776859299.807509725] [slam_data_collector]: Z-filter set (confirmed): [0.50m, 1.50m]
+[INFO] [1776859346.449700628] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776859410.995865805] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[Transfer] Model:     lightweight_train/results_3d_shape_delta_800k_maxsteps600/models/slam3d_180000_steps.zip
+[Transfer] VecNorm:   lightweight_train/results_3d_shape_delta_800k_maxsteps600/models/slam3d_vecnormalize_180000_steps.compat.pkl
+[Transfer] Episodes:  1
+[Transfer] EMA α:     0.50  (motion-safety filter active)
+[Transfer] Output:    logs/gazebo_transfer
+[ActiveSLAMEnv] Waiting for data... (pos=N map=N)
+[ActiveSLAMEnv] Waiting for data... (pos=Y map=N)
+[ActiveSLAMEnv] Sensor data received (position + map).
+[ActiveSLAMEnv] Z-filter: [0.5m, 1.5m] at alt=1.0m
+[Transfer] Loading VecNormalize stats...
+[Transfer] Loading model...
+[Transfer] Model loaded.
+
+[Transfer] === Episode 0/1 -> tier3_dryrun_s42_ep0_20260422_111914.csv ===
+
+[ActiveSLAMEnv] === RESET (Episode 1) ===
+[ActiveSLAMEnv] First episode — arming and taking off...
+[ActiveSLAMEnv] Arming and taking off to 1.0m...
+[ActiveSLAMEnv] Drone ARMED successfully (attempt 1).
+[ActiveSLAMEnv] Reached altitude: 0.80m (target: 1.0m)
+[ActiveSLAMEnv] Post-takeoff stabilization (3s)...
+[ActiveSLAMEnv] Stabilized at altitude: 0.87m
+[ActiveSLAMEnv] Z-filter: [0.5m, 1.5m] at alt=1.0m
+[ActiveSLAMEnv] Episode 1 ready. Known cells: 721, Cov: 0.0345
+[ActiveSLAMEnv] Altitude corrected: 1.24m → 1.26m (target: 1.0m, took 3.0s)
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[Step 50/2000] R=1.85 cov=12.6% cov_trace=0.2827 alt=3.0m frontiers=16 near_f=0.2m new_cells=0
+[ActiveSLAMEnv] Altitude corrected: 3.20m → 3.21m (target: 3.0m, took 3.0s)
+[ActiveSLAMEnv] Z-filter: [3.5m, 4.5m] at alt=4.0m
+[ActiveSLAMEnv] Altitude corrected: 4.23m → 4.20m (target: 4.0m, took 3.0s)
+[ActiveSLAMEnv] Altitude corrected: 4.25m → 4.26m (target: 4.0m, took 3.0s)
+[Step 100/2000] R=2.01 cov=12.8% cov_trace=0.5422 alt=4.0m frontiers=15 near_f=0.1m new_cells=0
+  step 100: cov=11.31% trace=0.542 loops=3 trk_lost=0
+[ActiveSLAMEnv] Altitude corrected: 4.28m → 4.32m (target: 4.0m, took 3.0s)
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[ActiveSLAMEnv] Altitude corrected: 4.21m → 3.52m (target: 3.0m, took 3.0s)
+[ActiveSLAMEnv] Z-filter: [3.5m, 4.5m] at alt=4.0m
+[Step 150/2000] R=1.86 cov=12.8% cov_trace=0.4841 alt=4.0m frontiers=15 near_f=0.2m new_cells=0
+[Step 200/2000] R=1.88 cov=12.8% cov_trace=0.3583 alt=4.0m frontiers=15 near_f=0.3m new_cells=0
+  step 200: cov=11.32% trace=0.358 loops=8 trk_lost=0
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[Step 250/2000] R=1.90 cov=13.6% cov_trace=0.3176 alt=3.0m frontiers=13 near_f=0.1m new_cells=0
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[Step 300/2000] R=1.91 cov=15.3% cov_trace=0.1821 alt=3.0m frontiers=12 near_f=0.3m new_cells=0
+  step 300: cov=12.81% trace=0.182 loops=12 trk_lost=0
+[ActiveSLAMEnv] Z-filter: [3.5m, 4.5m] at alt=4.0m
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[Step 350/2000] R=24.71 cov=16.4% cov_trace=0.4245 alt=3.0m frontiers=15 near_f=0.5m new_cells=96
+[ActiveSLAMEnv] Z-filter: [3.5m, 4.5m] at alt=4.0m
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[Step 400/2000] R=1.79 cov=15.7% cov_trace=0.1260 alt=3.0m frontiers=9 near_f=0.6m new_cells=0
+  step 400: cov=13.66% trace=0.126 loops=14 trk_lost=0
+[ActiveSLAMEnv] Altitude corrected: 2.73m → 2.72m (target: 3.0m, took 3.0s)
+[ActiveSLAMEnv] Z-filter: [3.5m, 4.5m] at alt=4.0m
+[ActiveSLAMEnv] Altitude corrected: 3.67m → 3.69m (target: 4.0m, took 3.0s)
+[ActiveSLAMEnv] Altitude corrected: 3.68m → 3.71m (target: 4.0m, took 3.0s)
+[ActiveSLAMEnv] Altitude corrected: 2.67m → 2.54m (target: 3.0m, took 3.0s)
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[ActiveSLAMEnv] STALE DATA detected — cov_trace frozen at 0.1613 for 8 steps. Hovering in place.
+[ActiveSLAMEnv] Altitude corrected: 2.53m → 2.47m (target: 3.0m, took 3.0s)
+[Step 450/2000] R=1.76 cov=12.9% cov_trace=0.1613 alt=2.0m frontiers=16 near_f=0.5m new_cells=0
+[ActiveSLAMEnv] STALE DATA detected — cov_trace frozen at 0.1613 for 8 steps. Hovering in place.
+[ActiveSLAMEnv] Altitude corrected: 2.45m → 2.53m (target: 2.0m, took 3.0s)
+[ActiveSLAMEnv] Z-filter: [3.5m, 4.5m] at alt=4.0m
+[ActiveSLAMEnv] STALE DATA detected — cov_trace frozen at 0.1613 for 8 steps. Hovering in place.
+[ActiveSLAMEnv] STALE DATA detected — cov_trace frozen at 0.1613 for 8 steps. Hovering in place.
+[ActiveSLAMEnv] Altitude corrected: 1.70m → 1.63m (target: 2.0m, took 3.0s)
+[ActiveSLAMEnv] STALE DATA detected — cov_trace frozen at 0.1613 for 8 steps. Hovering in place.
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[ActiveSLAMEnv] STALE DATA detected — cov_trace frozen at 0.1613 for 8 steps. Hovering in place.
+[ActiveSLAMEnv] Altitude corrected: 0.60m → 0.56m (target: 1.0m, took 3.0s)
+[Step 500/2000] R=1.96 cov=13.6% cov_trace=0.1513 alt=1.0m frontiers=19 near_f=0.6m new_cells=0
+  step 500: cov=13.13% trace=0.151 loops=15 trk_lost=0
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[ActiveSLAMEnv] Altitude corrected: 2.64m → 2.74m (target: 3.0m, took 3.0s)
+[ActiveSLAMEnv] Z-filter: [3.5m, 4.5m] at alt=4.0m
+[ActiveSLAMEnv] Altitude corrected: 2.82m → 3.62m (target: 4.0m, took 3.0s)
+[Step 550/2000] R=1.72 cov=14.4% cov_trace=0.3719 alt=4.0m frontiers=17 near_f=0.7m new_cells=0
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[ActiveSLAMEnv] Altitude corrected: 2.76m → 2.75m (target: 3.0m, took 3.0s)
+[ActiveSLAMEnv] Altitude corrected: 2.63m → 2.65m (target: 3.0m, took 3.0s)
+[ActiveSLAMEnv] Z-filter: [3.5m, 4.5m] at alt=4.0m
+[Step 600/2000] R=1.86 cov=14.4% cov_trace=0.3518 alt=4.0m frontiers=17 near_f=0.6m new_cells=0
+  step 600: cov=14.24% trace=0.352 loops=18 trk_lost=0
+[ActiveSLAMEnv] Altitude corrected: 3.78m → 3.81m (target: 4.0m, took 1.0s)
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[ActiveSLAMEnv] Altitude corrected: 3.99m → 3.27m (target: 3.0m, took 3.0s)
+[Step 650/2000] R=1.95 cov=14.7% cov_trace=0.2934 alt=3.0m frontiers=19 near_f=0.6m new_cells=0
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[ActiveSLAMEnv] Z-filter: [3.5m, 4.5m] at alt=4.0m
+[Step 700/2000] R=1.88 cov=18.7% cov_trace=0.3351 alt=4.0m frontiers=21 near_f=0.5m new_cells=0
+  step 700: cov=17.18% trace=0.335 loops=23 trk_lost=0
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[ActiveSLAMEnv] Z-filter: [3.5m, 4.5m] at alt=4.0m
+[Step 750/2000] R=1.81 cov=18.3% cov_trace=0.6173 alt=4.0m frontiers=22 near_f=0.6m new_cells=0
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[ActiveSLAMEnv] Z-filter: [3.5m, 4.5m] at alt=4.0m
+[Step 800/2000] R=1.82 cov=18.7% cov_trace=0.6530 alt=4.0m frontiers=24 near_f=0.6m new_cells=0
+  step 800: cov=17.21% trace=0.653 loops=27 trk_lost=0
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[Step 850/2000] R=17.93 cov=18.9% cov_trace=0.4272 alt=2.0m frontiers=25 near_f=0.5m new_cells=24
+[ActiveSLAMEnv] Z-filter: [0.5m, 1.5m] at alt=1.0m
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[Step 900/2000] R=1.93 cov=21.5% cov_trace=0.2952 alt=2.0m frontiers=28 near_f=0.6m new_cells=0
+  step 900: cov=20.06% trace=0.295 loops=31 trk_lost=0
+[ActiveSLAMEnv] Z-filter: [2.5m, 3.5m] at alt=3.0m
+[ActiveSLAMEnv] Altitude corrected: 2.66m → 2.69m (target: 3.0m, took 3.0s)
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[Step 950/2000] R=1.86 cov=21.1% cov_trace=0.2781 alt=2.0m frontiers=29 near_f=0.6m new_cells=0
+[ActiveSLAMEnv] Z-filter: [0.5m, 1.5m] at alt=1.0m
+[ActiveSLAMEnv] STALE DATA detected — cov_trace frozen at 0.2513 for 8 steps. Hovering in place.
+[ActiveSLAMEnv] STALE DATA detected — cov_trace frozen at 0.2513 for 8 steps. Hovering in place.
+[ActiveSLAMEnv] Z-filter: [1.5m, 2.5m] at alt=2.0m
+[ActiveSLAMEnv] STALE DATA detected — cov_trace frozen at 0.2581 for 8 steps. Hovering in place.
+[ActiveSLAMEnv] STALE DATA detected — cov_trace frozen at 0.2581 for 8 steps. Hovering in place.
+[INFO] [1776859462.221233278] [slam_data_collector]: Z-filter set (confirmed): [0.50m, 1.50m]
+[INFO] [1776859509.547181954] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776859554.472035196] [slam_data_collector]: Z-filter set (confirmed): [0.50m, 1.50m]
+[INFO] [1776859662.659190798] [slam_data_collector]: Z-filter set (confirmed): [1.50m, 2.50m]
+[INFO] [1776859735.809921104] [slam_data_collector]: RTAB-Map tracking RECOVERED (odometry resumed)
+[WARN] [1776859735.840682297] [slam_data_collector]: RTAB-Map tracking LOST — no odometry for 47.9s
+[WARN] [1776860080.269179762] [slam_data_collector]: RTAB-Map tracking LOST — no odometry for 331.0s

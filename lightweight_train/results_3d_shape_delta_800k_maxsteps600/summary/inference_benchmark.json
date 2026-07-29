@@ -1,0 +1,65 @@
+{
+  "platform": {
+    "cpu": "x86_64",
+    "system": "Linux 6.8.0-124-generic",
+    "python": "3.10.12",
+    "torch": "2.11.0+cu130",
+    "device": "cpu",
+    "threads": 1,
+    "note": "single CPU thread - UAV companion-computer emulation (no CUDA/Jetson available here)"
+  },
+  "model": {
+    "checkpoint": "lightweight_train/results_3d_shape_delta_800k_maxsteps600/models/slam3d_180000_steps.zip",
+    "policy_class": "RecurrentMultiInputActorCriticPolicy",
+    "total_params": 2023035,
+    "feature_extractor_params": 1429108,
+    "head_and_lstm_params": 593927
+  },
+  "compute": {
+    "per_layer_macs": {
+      "coordconv_5to32_k5s2": 3225600,
+      "conv_32to64_k3s2": 2654208,
+      "conv_64to64_k3s2": 1327104,
+      "conv_64to64_k3s1": 1327104,
+      "scalar_mlp": 2688,
+      "combine_mlp": 1327104,
+      "lstm_actor": 196608,
+      "pi_head": 99072
+    },
+    "total_macs": 10159488,
+    "total_flops": 20318976,
+    "note": "MACs for the predict() path (actor LSTM + pi head); norm/relu/pool omitted."
+  },
+  "latency_policy_inference_ms": {
+    "mean_ms": 1.1967359406262403,
+    "median_ms": 1.168813498225063,
+    "p95_ms": 1.377706001221668,
+    "p99_ms": 1.5494899998884648,
+    "min_ms": 1.1092119966633618,
+    "max_ms": 2.1847519965376705,
+    "std_ms": 0.08846733400788462,
+    "throughput_hz": 835.6062236057769
+  },
+  "latency_full_control_step_ms": {
+    "mean_ms": 1.9750437879979024,
+    "median_ms": 1.926965000166092,
+    "p95_ms": 2.29626199870836,
+    "p99_ms": 2.491623003152199,
+    "min_ms": 1.8082790047628805,
+    "max_ms": 2.783247997285798,
+    "std_ms": 0.14886817448275064,
+    "throughput_hz": 506.3178882801874
+  },
+  "latency_obs_construction_ms": {
+    "mean_ms": 0.5262501100223744,
+    "median_ms": 0.5261639998934697,
+    "p95_ms": 0.6036550039425492,
+    "p99_ms": 0.7030279957689345,
+    "min_ms": 0.3892330059898086,
+    "max_ms": 0.8754720038268715,
+    "std_ms": 0.05779168955858192,
+    "throughput_hz": 1900.237132411209
+  },
+  "iters": 1500,
+  "warmup": 200
+}

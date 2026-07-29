@@ -1,0 +1,17 @@
+# Python virtual environment (reproducible via requirements, ~4.8GB)
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Downloaded build tool binaries (tectonic/pandoc, ~335MB)
+tools/pandoc
+tools/pandoc-3.10/
+tools/tectonic
+
+# RL model checkpoints (large, excluded per request; code/configs/results kept)
+**/models/*.zip
+
+# Misc
+.DS_Store
+*.log.bak

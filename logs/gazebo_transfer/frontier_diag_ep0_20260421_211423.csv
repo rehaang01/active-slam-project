@@ -1,0 +1,1 @@
+step,timestamp,coverage,known_cells,total_cells,cov_trace,pos_x,pos_y,altitude,frontier_count,nearest_frontier_dist,loop_closures,tracking_lost_events,new_cells,alt_idx,altitude_changes,cov_alt0,cov_alt1,cov_alt2,cov_alt3,note

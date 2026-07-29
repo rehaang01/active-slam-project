@@ -1,0 +1,95 @@
+{
+  "checkpoints": [
+    {
+      "checkpoint": "slam3d_60000_steps.zip",
+      "step": 60000,
+      "final_coverage": 0.8054776914281857,
+      "final_cov_trace": 3.7363433316521277,
+      "final_loop_closures": 4.22,
+      "final_altitude_changes": 16.78,
+      "final_cov_alt0": 0.7284626053180361,
+      "final_cov_alt1": 0.8786064170266692,
+      "final_cov_alt2": 0.8679490076890776,
+      "final_cov_alt3": 0.7446275184155918,
+      "passes_stop_rule": false
+    },
+    {
+      "checkpoint": "slam3d_120000_steps.zip",
+      "step": 120000,
+      "final_coverage": 0.8609938912808159,
+      "final_cov_trace": 3.727631417103521,
+      "final_loop_closures": 4.12,
+      "final_altitude_changes": 17.1,
+      "final_cov_alt0": 0.7586585435214013,
+      "final_cov_alt1": 0.9132122158394438,
+      "final_cov_alt2": 0.928717219348312,
+      "final_cov_alt3": 0.8385341058834345,
+      "passes_stop_rule": false
+    },
+    {
+      "checkpoint": "slam3d_180000_steps.zip",
+      "step": 180000,
+      "final_coverage": 0.8221006939458897,
+      "final_cov_trace": 3.543112457145504,
+      "final_loop_closures": 4.84,
+      "final_altitude_changes": 15.7,
+      "final_cov_alt0": 0.6764913787937681,
+      "final_cov_alt1": 0.8638232175663814,
+      "final_cov_alt2": 0.9075314965753712,
+      "final_cov_alt3": 0.8323212207737611,
+      "passes_stop_rule": false
+    },
+    {
+      "checkpoint": "slam3d_240000_steps.zip",
+      "step": 240000,
+      "final_coverage": 0.8313972793969165,
+      "final_cov_trace": 3.626094057519467,
+      "final_loop_closures": 4.48,
+      "final_altitude_changes": 16.36,
+      "final_cov_alt0": 0.7641220571283728,
+      "final_cov_alt1": 0.8902349615590335,
+      "final_cov_alt2": 0.9005495775433521,
+      "final_cov_alt3": 0.7688637680850683,
+      "passes_stop_rule": false
+    },
+    {
+      "checkpoint": "slam3d_300000_steps.zip",
+      "step": 300000,
+      "final_coverage": 0.8351574731583778,
+      "final_cov_trace": 3.5730562349318786,
+      "final_loop_closures": 3.18,
+      "final_altitude_changes": 15.74,
+      "final_cov_alt0": 0.7588173294331626,
+      "final_cov_alt1": 0.8897247013678631,
+      "final_cov_alt2": 0.8859249488824403,
+      "final_cov_alt3": 0.8032644853438601,
+      "passes_stop_rule": false
+    },
+    {
+      "checkpoint": "slam3d_360000_steps.zip",
+      "step": 360000,
+      "final_coverage": 0.8677692433891311,
+      "final_cov_trace": 3.7461494154683375,
+      "final_loop_closures": 3.64,
+      "final_altitude_changes": 16.34,
+      "final_cov_alt0": 0.753286767298177,
+      "final_cov_alt1": 0.9262274833521381,
+      "final_cov_alt2": 0.9396937524377816,
+      "final_cov_alt3": 0.8465552094489037,
+      "passes_stop_rule": false
+    }
+  ],
+  "selected": {
+    "checkpoint": "slam3d_360000_steps.zip",
+    "step": 360000,
+    "final_coverage": 0.8677692433891311,
+    "final_cov_trace": 3.7461494154683375,
+    "final_loop_closures": 3.64,
+    "final_altitude_changes": 16.34,
+    "final_cov_alt0": 0.753286767298177,
+    "final_cov_alt1": 0.9262274833521381,
+    "final_cov_alt2": 0.9396937524377816,
+    "final_cov_alt3": 0.8465552094489037,
+    "passes_stop_rule": false
+  }
+}

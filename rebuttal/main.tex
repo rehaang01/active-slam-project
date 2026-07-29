@@ -1,0 +1,75 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath,amssymb,amsfonts,amsbsy}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[english]{babel}
+
+\oddsidemargin -0.04cm
+\evensidemargin -0.04cm
+\textwidth 16.59cm
+\textheight 21.94cm
+\renewcommand{\baselinestretch}{1.5}
+
+\begin{document}
+
+\title{\small Response to Reviewers' Comments and Changes Incorporated in the Revised Manuscript\\
+\vspace{2.0em}
+{\Large \bf Enhancing Coverage and Localization in Multi-Altitude UAV Active SLAM Using Recurrent Proximal Policy Optimization}\\
+\vspace{0.4em}
+\large{(Manuscript ID: ICAAV~2026 -- \textit{your submission ID})}\\
+\vspace{1.0em}
+%% ---- Author block: comment the next two lines out if the venue requires an anonymous rebuttal ----
+\small Rehaan Goenka, Anjali Gupta, Manish P. Singh, and Om Jee Pandey\\
+\vspace{0.3em}
+Department of Electronics Engineering, Indian Institute of Technology (BHU) Varanasi, Uttar Pradesh, India}
+\date{}
+\maketitle
+\vspace{-1.5em}
+
+We sincerely thank the Editor and the anonymous Reviewers for their precious time and for the positive and constructive comments on our manuscript. Addressing these comments has helped us improve the paper. We have responded to each comment below; the Reviewers' comments are \textit{italicized}, while the Authors' replies are in normal font. All the suggested changes have been incorporated in the revised full-length manuscript, and any grammatical and typographical errors have also been meticulously corrected.\\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{1em}
+
+\hspace{0.25cm}{\bf {\Large {~~~~~~~~~~~~Response to comments of Reviewer 1}}}\vspace{0.5em}
+
+%% NOTE: Reviewer 1's comments were not supplied. Paste each comment below and add the reply
+%% in the same format; delete this block if Reviewer 1 had no comments.
+\hspace{-0.7cm} {\bf Comment 1:}{\it{ [Insert Reviewer 1's comment here.] }}
+
+\hspace{-0.7cm} {{\bf{Reply 1:}} [Insert the corresponding reply here, in the same format as the replies to Reviewer 2 below.]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{1em}
+
+\hspace{0.25cm}{\bf {\Large {~~~~~~~~~~~~Response to comments of Reviewer 2}}}\vspace{0.5em}
+
+\hspace{-0.7cm} We are grateful to the Reviewer for the encouraging assessment of our work and for recognizing that it ``addresses a well-motivated gap in multi-altitude Active SLAM for UAVs'' with ``a thorough, well-evaluated reinforcement learning framework,'' that ``the CoordConv--LSTM Recurrent PPO design with altitude decomposition and the novel covariance-trace shaping term are clearly motivated and ablated,'' and that ``the 91.90\% headline coverage with statistical significance against all baselines is a strong result.'' We also thank the Reviewer for the four constructive suggestions for the full-length submission, which we have addressed individually as detailed below.
+
+\hspace{-0.7cm} {\bf Comment 1:}{\it{ For the full-length submission, we expect a brief sim-to-real discussion or roadmap.
+}}
+
+\hspace{-0.7cm} {{\bf{Reply 1:}} We thank the Reviewer for this valuable suggestion. In the revised manuscript, we have added a dedicated section, ``Sim-to-Real Transfer: Findings and Roadmap'' (Section~7), that discusses the transfer of the trained policy to a higher-fidelity setting. We describe a companion Gazebo/PX4 software-in-the-loop simulation in which an \texttt{x500} quadrotor carries a $360^\circ$ 2D LiDAR and an RGB-D camera, and RTAB-Map performs real-time visual SLAM to produce the occupancy grid, covariance, and loop closures that the lightweight environment abstracts. Because the observation and action interfaces match the training environment exactly, the trained checkpoint runs \emph{zero-shot} in this stack without any fine-tuning; in an altitude-capped run the policy explores with stable odometry and zero tracking-loss events, validating the end-to-end pipeline on a real SLAM backend. We further identify motion smoothness as the dominant sim-to-real gap and outline a concrete roadmap toward physical deployment, including a motion-smoothness reward, an altitude-transition penalty, and a frontier definition aligned to the RTAB-Map projection. Please refer to Section~7 of the revised manuscript for the same.
+
+\hspace{-0.7cm} {\bf Comment 2:}{\it{ For the full-length submission, we expect inference compute and latency numbers on a UAV-class platform.
+}}
+
+\hspace{-0.7cm} {{\bf{Reply 2:}} We thank the Reviewer for this practical and important suggestion. In the revised manuscript, we have added a new section, ``Computational Cost and Real-Time Feasibility'' (Section~6), that quantifies the inference cost of the proposed policy. The network has $2{,}023{,}035$ trainable parameters ($\approx\!2.02$\,M) and requires $10.16$\,M multiply--accumulate operations ($20.32$\,MFLOPs) per inference. Measured on a single CPU thread of an Intel Core i5-12450H with no GPU---deliberately emulating the modest single-core budget of a UAV companion computer---the policy forward pass completes in $1.20$\,ms on average ($1.55$\,ms at the $99$th percentile, i.e., ${\sim}836$ inferences per second), and the full control step including observation construction takes $1.98$\,ms (${\sim}506$\,Hz). We further note that even a conservative $10$--$20\times$ slowdown on an embedded ARM-class processor would still sustain $25$--$80$\,Hz, well above the waypoint-decision rate, so inference compute is not a deployment bottleneck. Please refer to Section~6 of the revised manuscript for the same.
+
+\hspace{-0.7cm} {\bf Comment 3:}{\it{ For the full-length submission, we expect at least one qualitative trajectory visualization across altitudes.
+}}
+
+\hspace{-0.7cm} {{\bf{Reply 3:}} We thank the Reviewer for this helpful suggestion. In the revised manuscript, we have added a qualitative trajectory visualization across altitudes (Fig.~4, in the Performance Evaluation section). The figure shows a representative learned rollout on a held-out map, with one panel per altitude layer; each panel overlays the obstacles and the agent's flight path while at that layer, colour-coded by episode step, with markers indicating where the agent enters and leaves the layer. The visualization makes the policy's behaviour explicit: it distributes its effort almost evenly across all four altitude layers ($136$, $124$, $106$, and $112$ steps) while reaching $95.1\%$ coverage, in clear contrast to classical planners that collapse onto the boundary layers. Please refer to Fig.~4 of the revised manuscript for the same.
+
+\hspace{-0.7cm} {\bf Comment 4:}{\it{ For the full-length submission, we expect some smoothing of the notation in the problem formulation.
+}}
+
+\hspace{-0.7cm} {{\bf{Reply 4:}} We thank the Reviewer for this constructive suggestion. In the revised manuscript, we have revised the System Model and Problem Formulation (Section~3) to smooth and standardize the notation. In particular, we now define every symbol at its first appearance, clearly distinguish the true UAV pose from estimated quantities, and state the scalar uncertainty surrogate $\sigma_t$ explicitly as a proxy for the covariance trace $\mathrm{Tr}(\Sigma_t)$ together with its update rule. We have also made the POMDP tuple, the objective, and the constraint-set notation consistent throughout the section, and we use SI units and consistent terminology (e.g., ``UAV'' rather than ``drone'') across the paper. Please refer to Section~3 of the revised manuscript for the same.
+
+\vspace{1em}
+\hspace{-0.7cm} We once again thank the Editor and the Reviewers for their careful reading and constructive feedback, which have helped us improve the quality and completeness of the manuscript.
+
+\end{document}
